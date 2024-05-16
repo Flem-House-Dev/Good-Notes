@@ -1,9 +1,10 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 
 const notesData = require('./db/db.json');
 const uuid = require('./helpers/uuid');
-const { stat } = require('fs');
+const { stat, fstat } = require('fs');
 
 const PORT = 3001;
 
@@ -32,12 +33,23 @@ app.post('/api/notes', (req,res) => {
     console.log(`New Note request recieved`);
     const { title, text } = req.body;
 
+    const existingDb = fs.readFileSync('./db/db.json', 'utf8');
+    const jsonData = JSON.parse(existingDb);
+
     if (title && text) {
         const newNoteBody = {
             title,
             text,
             note_id: uuid(),
         };
+
+        jsonData.push(newNoteBody);
+
+        const noteString = JSON.stringify(jsonData, null,2);
+
+        fs.writeFile('./db/db.json', `${noteString}\n`, (err) => {
+            err ? console.log(err) : console.log('note database has been updated.');
+        });
 
         const response = {
             status: 'success',
@@ -51,6 +63,8 @@ app.post('/api/notes', (req,res) => {
         res.status(500).json('Error in creating new note');
     }
 })
+
+
 
 // ------- Port listener --------
 app.listen(PORT, () =>
