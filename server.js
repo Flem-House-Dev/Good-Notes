@@ -40,7 +40,7 @@ app.post('/api/notes', (req,res) => {
         const newNoteBody = {
             title,
             text,
-            note_id: uuid(),
+            id: uuid(),
         };
 
         jsonData.push(newNoteBody);
