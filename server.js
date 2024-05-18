@@ -1,10 +1,9 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
+const fs = require('node:fs');
 
 const notesData = require('./db/db.json');
 const uuid = require('./helpers/uuid');
-const { stat, fstat } = require('fs');
 
 const PORT = 3001;
 
@@ -22,18 +21,18 @@ app.get('/', (req,res) => {
 
 // ------- Routes --------
 app.get('/notes', (req,res) => {
-    res.sendFile(path.join(__dirname, '/public/notes.html'))
+    res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
 app.get('/api/notes', (req,res) => {
     res.status(200).json(notesData);
 })
 
-app.post('/api/notes', (req,res) => {
+app.post('/api/notes',  (req,res) => {
     console.log(`New Note request recieved`);
     const { title, text } = req.body;
 
-    const existingDb = fs.readFileSync('./db/db.json', 'utf8');
+    const existingDb =  fs.readFileSync('./db/db.json');
     const jsonData = JSON.parse(existingDb);
 
     if (title && text) {
@@ -43,12 +42,17 @@ app.post('/api/notes', (req,res) => {
             id: uuid(),
         };
 
+        // --------------
         jsonData.push(newNoteBody);
 
         const noteString = JSON.stringify(jsonData, null,2);
 
-        fs.writeFile('./db/db.json', `${noteString}\n`, (err) => {
-            err ? console.log(err) : console.log('note database has been updated.');
+        fs.writeFile('./db/db.json', noteString, (err) => {
+            if (err) {
+                console.error('Error writing file', err);
+            } else {
+                console.log('Note database has been updated');
+            }
         });
 
         const response = {
@@ -59,12 +63,22 @@ app.post('/api/notes', (req,res) => {
         console.log(response);
         res.status(201).json(response);
     }
+
+    // ----------------
     else {
         res.status(500).json('Error in creating new note');
     }
+    
 })
 
+app.delete(`/api/notes/:id`, (req,res) => {
+    const noteId = req.params.id;
+    const notes = JSON.parse(fs.readFileSync('./db/db.json'));
+    const updateNotes = notes.filter(note => note.id !== noteId);
 
+    fs.writeFileSync('./db/db.json', JSON.stringify(updateNotes, null, 2), 'utf-8');
+    res.json({ message: "Note deleted successfully"});
+});
 
 // ------- Port listener --------
 app.listen(PORT, () =>
