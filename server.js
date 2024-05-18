@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const notesData = require('./db/db.json');
 const uuid = require('./helpers/uuid');
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -81,6 +81,4 @@ app.delete(`/api/notes/:id`, (req,res) => {
 });
 
 // ------- Port listener --------
-app.listen(PORT, () =>
-    console.log(`App listening at http://localhost:${PORT}`)
-);
+app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
