@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const fs = require('node:fs');
+const fs = require('fs');
 
 const notesData = require('./db/db.json');
 const uuid = require('./helpers/uuid');
@@ -42,7 +42,6 @@ app.post('/api/notes',  (req,res) => {
             id: uuid(),
         };
 
-        // --------------
         jsonData.push(newNoteBody);
 
         const noteString = JSON.stringify(jsonData, null,2);
@@ -64,7 +63,6 @@ app.post('/api/notes',  (req,res) => {
         res.status(201).json(response);
     }
 
-    // ----------------
     else {
         res.status(500).json('Error in creating new note');
     }
