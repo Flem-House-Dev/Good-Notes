@@ -1,7 +1,7 @@
-# Good Notes 📝
+# Nice Notes 📝
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   ## Description
-  Good Notes is a simple yet useful note taking app. Taking notes can be a great way to keep track of ideas. And, this app makes it simple to keep track of them by enabling the user to enter, save, and delete them. 
+  Nice Notes is a simple yet useful note taking app. Taking notes can be a great way to keep track of ideas. And, this app makes it simple to keep track of them by enabling the user to enter, save, and delete them. 
   ## Table of Contents
 
   1. [Installation](#Installation)
@@ -11,7 +11,7 @@
 
   ## Installaion
   No installation is necessary. </br>
-  Simply visit [Good Notes](https://good-notes-13au.onrender.com/) on the web to get started.
+  Simply visit [Nice Notes](https://good-notes-13au.onrender.com/) on the web to get started.
   ## Usage
  ![Landing page](./assets/images/landing_page.PNG) 
 
