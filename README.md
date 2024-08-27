@@ -11,7 +11,7 @@
 
   ## Installaion
   No installation is necessary. </br>
-  Simply visit [Nice Notes](https://good-notes-13au.onrender.com/) on the web to get started.
+  Simply visit [Nice Notes](https://nice-notes.onrender.com) on the web to get started.
   ## Usage
  ![Landing page](./assets/images/landing_page.PNG) 
 
